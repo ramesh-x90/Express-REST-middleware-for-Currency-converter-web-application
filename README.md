@@ -38,7 +38,7 @@ npm run dev
 npm run stub-gen
 ```
 
-React Build (html,js,css) also hosted here: [http://localhost:4000/](http://localhost:4000/)
+React Build ( `html`,`js`,`css` ) also hosted here: [http://localhost:4000/](http://localhost:4000/)
 
 Docs: [http://localhost:4000/docs](http://localhost:4000/docs)
 
