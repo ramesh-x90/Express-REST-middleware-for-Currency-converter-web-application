@@ -8,7 +8,8 @@
     "start": "node ./dist/",
     "compile": ".\\node_modules\\.bin\\tsc -b --assumeChangesOnlyAffectDirectDependencies",
     "build": ".\\node_modules\\.bin\\tsc -b && cp -r ./src/docs ./dist/",
-    "dev": ".\\node_modules\\.bin\\nodemon --watch ./src -e ts,wsdl,js  --exec \"echo restarting server application && npm run compile && npm start\" "
+    "dev": ".\\node_modules\\.bin\\nodemon --watch ./src -e ts,wsdl,js  --exec \"echo restarting server application && npm run compile && npm start\" ",
+    "stub-gen": "rm -r ./src/generated && .\\node_modules\\.bin\\wsdl-tsclient ./src/wsdl.wsdl -o ./src/generated"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
     "express": "^4.18.2",
     "nodemon": "^2.0.20",
     "soap": "^0.45.0",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "wsdl-tsclient": "^1.4.0"
   }
 }

@@ -32,6 +32,12 @@ npm start
 npm run dev
 ```
 
+## generate soap client stub
+
+```sh
+npm run stub-gen
+```
+
 React client also hosted here: [http://localhost:4000/](http://localhost:4000/)
 
 Docs: [http://localhost:4000/docs](http://localhost:4000/docs)
