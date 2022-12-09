@@ -10,19 +10,27 @@ _Express RESP API server application for currency conversion application._
 
 ## Installation
 
-`npm install`
+```sh
+npm install
+```
 
 ## Build
 
-`npm run build`
+```sh
+npm run build
+```
 
 ## Start server
 
-`npm start`
+```sh
+npm start
+```
 
 ## Development server
 
-`npm run dev`
+```sh
+npm run dev
+```
 
 ## Express REST API to consume SOAP currency converter web-service
 
