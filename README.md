@@ -32,9 +32,9 @@ npm start
 npm run dev
 ```
 
-react clint also hosted here [http://localhost:4000/](http://localhost:4000/)
+React clint also hosted here: [http://localhost:4000/](http://localhost:4000/)
 
-docs [http://localhost:4000/docs](http://localhost:4000/docs)
+Docs: [http://localhost:4000/docs](http://localhost:4000/docs)
 
 ## Express REST API to consume SOAP currency converter web-service
 
