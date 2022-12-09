@@ -42,9 +42,9 @@ React client also hosted here: [http://localhost:4000/](http://localhost:4000/)
 
 Docs: [http://localhost:4000/docs](http://localhost:4000/docs)
 
-## Express REST API to consume SOAP currency converter web-service
+## SOAP currency converter web-service
 
-[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=ramesh-x90&repo=Express-REST-middleware-for-Currency-convertor-web-application)](https://github.com/ramesh-x90/Express-REST-middleware-for-Currency-convertor-web-application.git)
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=ramesh-x90&repo=SoapCurrencyConverter-kotlin-webservice)](https://github.com/ramesh-x90/SoapCurrencyConverter-kotlin-webservice.git)
 
 ## React client web application
 
