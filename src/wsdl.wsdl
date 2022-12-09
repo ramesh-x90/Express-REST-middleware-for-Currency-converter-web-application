@@ -1,0 +1,97 @@
+<definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.ramesh/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://service.ramesh/" name="currencyConverterSoap">
+<types>
+<xs:schema xmlns:tns="http://service.ramesh/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://service.ramesh/">
+<xs:element name="Exception" type="tns:Exception"/>
+<xs:element name="convertCurrency" type="tns:convertCurrency"/>
+<xs:element name="convertCurrencyResponse" type="tns:convertCurrencyResponse"/>
+<xs:element name="getAllCodeAndNames" type="tns:getAllCodeAndNames"/>
+<xs:element name="getAllCodeAndNamesResponse" type="tns:getAllCodeAndNamesResponse"/>
+<xs:complexType name="codeNamePair">
+<xs:sequence>
+<xs:element name="code" type="xs:string" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="convertCurrency">
+<xs:sequence>
+<xs:element name="sourceCurrency" type="xs:string"/>
+<xs:element name="targetCurrency" type="xs:string"/>
+<xs:element name="amount" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="convertCurrencyResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Exception">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getAllCodeAndNames">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getAllCodeAndNamesResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:codeNamePair" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+</types>
+<message name="getAllCodeAndNames">
+<part name="parameters" element="tns:getAllCodeAndNames"/>
+</message>
+<message name="getAllCodeAndNamesResponse">
+<part name="parameters" element="tns:getAllCodeAndNamesResponse"/>
+</message>
+<message name="convertCurrency">
+<part name="parameters" element="tns:convertCurrency"/>
+</message>
+<message name="convertCurrencyResponse">
+<part name="parameters" element="tns:convertCurrencyResponse"/>
+</message>
+<message name="Exception">
+<part name="fault" element="tns:Exception"/>
+</message>
+<portType name="IService">
+<operation name="getAllCodeAndNames">
+<input wsam:Action="http://service.ramesh/IService/getAllCodeAndNamesRequest" message="tns:getAllCodeAndNames"/>
+<output wsam:Action="http://service.ramesh/IService/getAllCodeAndNamesResponse" message="tns:getAllCodeAndNamesResponse"/>
+</operation>
+<operation name="convertCurrency">
+<input wsam:Action="http://service.ramesh/IService/convertCurrencyRequest" message="tns:convertCurrency"/>
+<output wsam:Action="http://service.ramesh/IService/convertCurrencyResponse" message="tns:convertCurrencyResponse"/>
+<fault message="tns:Exception" name="Exception" wsam:Action="http://service.ramesh/IService/convertCurrency/Fault/Exception"/>
+</operation>
+</portType>
+<binding name="currencyConverterPortBinding" type="tns:IService">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="getAllCodeAndNames">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="convertCurrency">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="Exception">
+<soap:fault name="Exception" use="literal"/>
+</fault>
+</operation>
+</binding>
+<service name="currencyConverterSoap">
+<port name="currencyConverterPort" binding="tns:currencyConverterPortBinding">
+<soap:address location="http://localhost:8080/ws/currencyConvetService"/>
+</port>
+</service>
+</definitions>
