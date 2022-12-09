@@ -8,23 +8,21 @@ _Express RESP API server application for currency conversion application._
 2. npm
 3. typescript
 
-## installation
+## Installation
 
-1. command `npm install`
+`npm install`
 
-## build
+## Build
 
-1. `npm build`
+`npm run build`
 
-## start server
+## Start server
 
-1. `npm start`
+`npm start`
 
-## development server
+## Development server
 
-1. `npm dev`
-
-## start
+`npm run dev`
 
 ## Express REST API to consume SOAP currency converter web-service
 
