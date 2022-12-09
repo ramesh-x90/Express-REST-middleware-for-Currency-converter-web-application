@@ -9,34 +9,19 @@
 </head>
 
 <body class="stackedit">
-  <div class="stackedit__left">
-    <div class="stackedit__toc">
-      
-<ul>
-<li>
-<ul>
-<li><a href="#endpoints">Endpoints</a></li>
-</ul>
-</li>
-</ul>
-
-    </div>
-  </div>
-  <div class="stackedit__right">
-    <div class="stackedit__html">
-      <h2 id="endpoints">Endpoints</h2>
+  <div class="stackedit__html"><h2 id="endpoints">Endpoints</h2>
 <blockquote>
 <ul>
-<li>/docs</li>
-<li>/codeNames</li>
-<li>/convert</li>
+<li><code>/docs</code></li>
+<li><code>/codeNames</code></li>
+<li><code>/convert</code></li>
 </ul>
 </blockquote>
 <blockquote></blockquote>
 <h3 id="codenames">/codeNames</h3>
 <blockquote>
-<p>method : get<br>
-output : list &lt; { code: “LKR”, name: “Sri Lanka” } &gt;</p>
+<p><code>method</code> : <code>get</code><br>
+<code>output</code> : <code>list</code> &lt; { <code>code</code> : “LKR”, <code>name</code> : “Sri Lanka” } &gt;</p>
 </blockquote>
 <h4 id="example">Example</h4>
 <pre><code>response &gt; 
@@ -57,12 +42,12 @@ output : list &lt; { code: “LKR”, name: “Sri Lanka” } &gt;</p>
 </code></pre>
 <h3 id="convert">/convert</h3>
 <blockquote>
-<p>method: post<br>
-input:</p>
+<p><code>method</code> : <code>post</code><br>
+<code>input</code> :</p>
 <blockquote>
-<p>amount: “Double”, sourceCurrency: “String”, targetCurrency: “String”</p>
+<p><code>amount</code> : “Double”, <code>sourceCurrency</code> : “String”, <code>targetCurrency</code> : “String”</p>
 </blockquote>
-<p>output:</p>
+<p><code>output</code> :</p>
 <blockquote>
 <p>“Double”</p>
 </blockquote>
@@ -76,9 +61,7 @@ input:</p>
     
     response &gt; 2.7352
 </code></pre>
-
-    </div>
-  </div>
+</div>
 </body>
 
 </html>
