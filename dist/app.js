@@ -12,25 +12,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.App = void 0;
+exports.App = exports.SoapClientError = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const wsdl_1 = require("./generated/wsdl/");
 const body_parser_1 = __importDefault(require("body-parser"));
+class SoapClientError {
+    constructor() {
+        this.name = "SoapClientError";
+        this.message = "SoapClientError: check application arguments or the network..";
+    }
+}
+exports.SoapClientError = SoapClientError;
 function App({ _port, endPointProtocol, endPointHost, endPointPort, endPointPath, }) {
     return __awaiter(this, void 0, void 0, function* () {
         const app = (0, express_1.default)();
         const endpoint = `${endPointProtocol}://${endPointHost}:${endPointPort}${endPointPath}`;
-        console.log(`endpoint address : ${endpoint}`);
-        const soapClient = yield (0, wsdl_1.createClientAsync)('./src/wsdl.wsdl', undefined, endpoint);
-        const codeNameCache = yield soapClient.getAllCodeAndNamesAsync({});
+        let soapClient;
+        let codeNameCache;
+        try {
+            soapClient = yield (0, wsdl_1.createClientAsync)('./src/wsdl.wsdl', undefined, endpoint);
+            codeNameCache = (yield soapClient.getAllCodeAndNamesAsync({}))[0].return;
+        }
+        catch (error) {
+            throw new SoapClientError();
+        }
         app.use(body_parser_1.default.json());
         app.use((0, cors_1.default)());
         app.use('/docs', express_1.default.static('./dist/docs'));
         app.use('/', express_1.default.static('./dist/ui'));
-        app.get('/codeNames', (req, res) => {
-            res.json(codeNameCache[0].return);
-        });
+        app.get('/codeNames', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            res.json(codeNameCache);
+        }));
         app.post('/convert', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { amount, sourceCurrency, targetCurrency } = req.body;
             try {

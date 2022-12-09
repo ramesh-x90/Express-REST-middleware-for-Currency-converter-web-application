@@ -1,3 +1,8 @@
+import cluster from 'node:cluster';
+import { cpus } from 'node:os';
+import process from 'node:process';
+
+
 import { App, AppArgs } from "./app";
 
 
@@ -11,12 +16,48 @@ const args: AppArgs = {
 }
 
 
+const numCPUs = cpus().length;
 
-console.log(args)
 
 
-App(args).catch(
-    e => console.log((e as Error).message)
-);
+if (cluster.isPrimary) {
+
+    console.log({ appArgs: args })
+    console.log(`Primary pid: ${process.pid}`);
+
+    // Fork workers.
+    for (let i = 0; i < numCPUs; i++) {
+        cluster.fork();
+    }
+
+    // Redundancy spin a new work in case of failure in a worker
+    cluster.on('disconnect', (worker) => {
+        console.log(`worker ${worker.process.pid} died`);
+        console.log("restarting worker")
+        setTimeout(cluster.fork, 5000)
+    });
+
+
+    cluster.on("message", (worker, message, handle) => {
+
+    })
+
+
+} else {
+    App(args).catch(
+        e => {
+            process.disconnect()
+        }
+    );
+
+    console.log(`Worker pid: ${process.pid} started`);
+
+
+}
+
+
+
+
+
 
 

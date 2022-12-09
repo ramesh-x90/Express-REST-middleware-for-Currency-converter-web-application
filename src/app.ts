@@ -1,6 +1,6 @@
 import Express, { Response, Request } from 'express'
 import cors from 'cors'
-import { createClientAsync } from './generated/wsdl/'
+import { createClientAsync, Return, WsdlClient } from './generated/wsdl/'
 import body_parser from 'body-parser'
 
 
@@ -11,6 +11,17 @@ export interface AppArgs {
     endPointHost: string,
     endPointPort: number,
     endPointPath: string
+}
+
+export class SoapClientError implements Error {
+    name: string
+    message: string
+    stack?: string | undefined
+    constructor() {
+        this.name = "SoapClientError"
+        this.message = "SoapClientError: check application arguments or the network.."
+    }
+
 }
 
 
@@ -28,20 +39,27 @@ export async function App(
 
     const endpoint = `${endPointProtocol}://${endPointHost}:${endPointPort}${endPointPath}`
 
-    console.log(`endpoint address : ${endpoint}`)
 
-    const soapClient = await createClientAsync('./src/wsdl.wsdl', undefined, endpoint);
+    let soapClient: WsdlClient;
+    let codeNameCache: Array<Return>;
 
-    const codeNameCache = await soapClient.getAllCodeAndNamesAsync({});
+
+    try {
+        soapClient = await createClientAsync('./src/wsdl.wsdl', undefined, endpoint);
+        codeNameCache = (await soapClient.getAllCodeAndNamesAsync({}))[0].return as Return[];
+
+    } catch (error) {
+        throw new SoapClientError()
+    }
+
 
     app.use(body_parser.json());
     app.use(cors());
     app.use('/docs', Express.static('./dist/docs'));
     app.use('/', Express.static('./dist/ui'));
 
-
-    app.get('/codeNames', (req, res) => {
-        res.json(codeNameCache[0].return);
+    app.get('/codeNames', async (req, res) => {
+        res.json(codeNameCache);
     });
 
     app.post('/convert', async (req: Request, res: Response) => {
