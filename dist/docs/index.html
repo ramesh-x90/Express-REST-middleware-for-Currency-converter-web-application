@@ -1,103 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
 </head>
 
-<body>
-    <blockquote>
-        <p><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">endpoints: </span></p>
+<body class="stackedit">
+  <div class="stackedit__left">
+    <div class="stackedit__toc">
+      
+<ul>
+<li>
+<ul>
+<li><a href="#endpoints">Endpoints</a></li>
+</ul>
+</li>
+</ul>
 
-        <p><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">[ </span></p>
+    </div>
+  </div>
+  <div class="stackedit__right">
+    <div class="stackedit__html">
+      <h2 id="endpoints">Endpoints</h2>
+<blockquote>
+<ul>
+<li>/docs</li>
+<li>/codeNames</li>
+<li>/convert</li>
+</ul>
+</blockquote>
+<blockquote></blockquote>
+<h3 id="codenames">/codeNames</h3>
+<blockquote>
+<p>method : get<br>
+output : list &lt; { code: “LKR”, name: “Sri Lanka” } &gt;</p>
+</blockquote>
+<h4 id="example">Example</h4>
+<pre><code>response &gt; 
+[
+    {
+	    "code":  "FJD",
+	    "name":  "Fiji Dollar"
+    },
+    {
+	    "code":  "MXN",
+	    "name":  "Mexican Peso"
+    },
+    {
+	    "code":  "SCR",
+	    "name":  "Seychelles rupee"
+    },
+]
+</code></pre>
+<h3 id="convert">/convert</h3>
+<blockquote>
+<p>method: post<br>
+input:</p>
+<blockquote>
+<p>amount: “Double”, sourceCurrency: “String”, targetCurrency: “String”</p>
+</blockquote>
+<p>output:</p>
+<blockquote>
+<p>“Double”</p>
+</blockquote>
+</blockquote>
+<h4 id="example-1">Example</h4>
+<pre><code>   body &gt; {    
+   "amount"  :  1000,
+   "sourceCurrency"  :  "LKR",
+   "targetCurrency"  :  "USD"
+    }
+    
+    response &gt; 2.7352
+</code></pre>
 
-        <ol>
-            <li><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">/docs, </span></li>
-            <li><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">/codeNames,</span></li>
-            <li><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">/convert </span></li>
-        </ol>
-
-        <p><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">],</span></p>
-    </blockquote>
-
-    <p>&nbsp;</p>
-
-    <blockquote>
-        <p><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">/codeNames:<br />
-                {</span></p>
-
-        <p style="margin-left:40px"><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">method:
-                get,</span></p>
-
-        <p style="margin-left:40px"><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">output:
-                [</span></p>
-
-        <p style="margin-left:80px"><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">{ code:
-                &quot;LKR&quot;, name: &quot;Sri Lanka&quot; },</span></p>
-
-        <p style="margin-left:40px"><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">]</span></p>
-
-        <p><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">}</span></p>
-    </blockquote>
-
-    <p>&nbsp;</p>
-
-    <blockquote>
-        <p><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">/convert:</span></p>
-
-        <p><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">{</span></p>
-
-        <p style="margin-left: 40px;"><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">method:
-                post,</span></p>
-
-        <p style="margin-left: 40px;"><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">input:
-                {</span></p>
-
-        <p style="margin-left: 80px;"><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">amount:
-                &quot;Double&quot;,</span></p>
-
-        <p style="margin-left: 80px;"><span
-                style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">sourceCurrency:
-                &quot;String&quot;,</span></p>
-
-        <p style="margin-left: 80px;"><span
-                style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">targetCurrency:
-                &quot;String&quot;</span></p>
-
-        <p style="margin-left: 40px;"><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">},</span>
-        </p>
-
-        <p style="margin-left: 40px;"><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">output:
-                &quot;Double&quot;</span></p>
-
-        <p><span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">}</span></p>
-    </blockquote>
-
-    <pre>
-        <code>endpoints: [ /docs, /codeNames, /convert ],
-        
-        /codeNames:{
-        method: get, 
-        output: [{ code: "LKR", name: "Sri Lanka" },] 
-        }
-        
-        /convert:{ 
-        method: post, 
-        input: { amount: "Double", sourceCurrency: "String", targetCurrency: "String" }, 
-        output: "Double" 
-        }</code></pre>
-
-    <p>&nbsp;</p>
-
-    <p>😀</p>
-
-    <p>&nbsp;</p>
-
-    <p>&nbsp;</p>
-
+    </div>
+  </div>
 </body>
 
 </html>
