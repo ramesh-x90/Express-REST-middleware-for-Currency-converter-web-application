@@ -32,7 +32,7 @@ npm start
 npm run dev
 ```
 
-## generate soap client stub
+## Generate soap client stub
 
 ```sh
 npm run stub-gen
