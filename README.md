@@ -32,7 +32,7 @@ npm start
 npm run dev
 ```
 
-React clint also hosted here: [http://localhost:4000/](http://localhost:4000/)
+React client also hosted here: [http://localhost:4000/](http://localhost:4000/)
 
 Docs: [http://localhost:4000/docs](http://localhost:4000/docs)
 
