@@ -1,6 +1,6 @@
 # Express-REST-middleware-for-Currency-converter-web-application
 
-_Express RESP API server application for currency conversion application._
+_Express REST API server application for currency conversion application._
 
 ## Requirements
 
