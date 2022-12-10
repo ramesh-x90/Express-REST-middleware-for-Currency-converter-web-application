@@ -33,6 +33,7 @@ if (node_cluster_1.default.isPrimary) {
 }
 else {
     (0, app_1.App)(args).catch(e => {
+        console.log(e);
         node_process_1.default.disconnect();
     });
     console.log(`Worker pid: ${node_process_1.default.pid} started`);

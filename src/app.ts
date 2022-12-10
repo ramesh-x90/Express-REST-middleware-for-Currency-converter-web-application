@@ -1,7 +1,8 @@
-import Express, { Response, Request } from 'express'
+import Express, { Response, Request, NextFunction } from 'express'
 import cors from 'cors'
 import { createClientAsync, Return, WsdlClient } from './generated/wsdl/'
 import body_parser from 'body-parser'
+import { ValidatorFactory } from './validators/validators'
 
 
 
@@ -23,6 +24,25 @@ export class SoapClientError implements Error {
     }
 
 }
+
+
+
+
+function validation1(req: Request, res: Response, next: NextFunction) {
+    console.log("first validation")
+    next()
+}
+
+
+function validation2(req: Request, res: Response, next: NextFunction) {
+    console.log("second validation")
+    next()
+}
+
+
+
+
+
 
 
 export async function App(
@@ -58,27 +78,42 @@ export async function App(
     app.use('/docs', Express.static('./dist/docs'));
     app.use('/', Express.static('./dist/ui'));
 
+
+
+    const validatorFactory = new ValidatorFactory('Body-field')
+
     app.get('/codeNames', async (req, res) => {
         res.json(codeNameCache);
     });
 
-    app.post('/convert', async (req: Request, res: Response) => {
+
+    const amountValidator = validatorFactory.createValidator("amount")!.isNull().isNumber().validators
+    const sourceCurrencyValidator = validatorFactory.createValidator("sourceCurrency")!.isNull().isEmptyString().validators
+    const targetCurrencyValidator = validatorFactory.createValidator("targetCurrency")!.isNull().isEmptyString().validators
+
+    app.post('/convert', amountValidator, sourceCurrencyValidator, targetCurrencyValidator, async (req: Request, res: Response) => {
         const { amount, sourceCurrency, targetCurrency } = req.body;
         try {
-            const data = await soapClient.convertCurrencyAsync({
+            const data = (await soapClient.convertCurrencyAsync({
                 amount,
                 sourceCurrency,
                 targetCurrency
-            });
-            res.status(200).json(data[0].return);
+            }))[0].return;
+            res.status(200).json(data);
         }
         catch (error) {
-            const str = (error as Error).message;
-            const a = str.indexOf('{');
-            const b = str.lastIndexOf('}');
-            const err = JSON.parse(str.slice(a, b + 1));
-            res.status(200);
-            res.send({ error: err.Exception.message });
+
+            try {
+                const str = (error as Error).message;
+                const a = str.indexOf('{');
+                const b = str.lastIndexOf('}');
+                const err = JSON.parse(str.slice(a, b + 1));
+                res.status(404).json({ error: err.Exception.message ? err.Exception.message : err });
+            } catch (error) {
+                res.status(404).json({ error: "invalid fields" })
+            }
+
+
         }
     });
 

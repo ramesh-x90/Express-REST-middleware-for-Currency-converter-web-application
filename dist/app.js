@@ -17,6 +17,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const wsdl_1 = require("./generated/wsdl/");
 const body_parser_1 = __importDefault(require("body-parser"));
+const validators_1 = require("./validators/validators");
 class SoapClientError {
     constructor() {
         this.name = "SoapClientError";
@@ -24,6 +25,14 @@ class SoapClientError {
     }
 }
 exports.SoapClientError = SoapClientError;
+function validation1(req, res, next) {
+    console.log("first validation");
+    next();
+}
+function validation2(req, res, next) {
+    console.log("second validation");
+    next();
+}
 function App({ _port, endPointProtocol, endPointHost, endPointPort, endPointPath, }) {
     return __awaiter(this, void 0, void 0, function* () {
         const app = (0, express_1.default)();
@@ -41,26 +50,34 @@ function App({ _port, endPointProtocol, endPointHost, endPointPort, endPointPath
         app.use((0, cors_1.default)());
         app.use('/docs', express_1.default.static('./dist/docs'));
         app.use('/', express_1.default.static('./dist/ui'));
+        const validatorFactory = new validators_1.ValidatorFactory('Body-field');
         app.get('/codeNames', (req, res) => __awaiter(this, void 0, void 0, function* () {
             res.json(codeNameCache);
         }));
-        app.post('/convert', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const amountValidator = validatorFactory.createValidator("amount").isNull().isNumber().validators;
+        const sourceCurrencyValidator = validatorFactory.createValidator("sourceCurrency").isNull().isEmptyString().validators;
+        const targetCurrencyValidator = validatorFactory.createValidator("targetCurrency").isNull().isEmptyString().validators;
+        app.post('/convert', amountValidator, sourceCurrencyValidator, targetCurrencyValidator, (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { amount, sourceCurrency, targetCurrency } = req.body;
             try {
-                const data = yield soapClient.convertCurrencyAsync({
+                const data = (yield soapClient.convertCurrencyAsync({
                     amount,
                     sourceCurrency,
                     targetCurrency
-                });
-                res.status(200).json(data[0].return);
+                }))[0].return;
+                res.status(200).json(data);
             }
             catch (error) {
-                const str = error.message;
-                const a = str.indexOf('{');
-                const b = str.lastIndexOf('}');
-                const err = JSON.parse(str.slice(a, b + 1));
-                res.status(200);
-                res.send({ error: err.Exception.message });
+                try {
+                    const str = error.message;
+                    const a = str.indexOf('{');
+                    const b = str.lastIndexOf('}');
+                    const err = JSON.parse(str.slice(a, b + 1));
+                    res.status(404).json({ error: err.Exception.message ? err.Exception.message : err });
+                }
+                catch (error) {
+                    res.status(404).json({ error: "invalid fields" });
+                }
             }
         }));
         const s = app.listen(_port);

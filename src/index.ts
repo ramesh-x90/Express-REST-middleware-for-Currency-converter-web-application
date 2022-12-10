@@ -46,6 +46,7 @@ if (cluster.isPrimary) {
 } else {
     App(args).catch(
         e => {
+            console.log(e)
             process.disconnect()
         }
     );
