@@ -18,7 +18,7 @@ class FieldValidator {
     }
     isNull() {
         this.validators.push((req, res, next) => {
-            if (this.getData(req)) {
+            if (this.getData(req) !== null) {
                 next();
                 return;
             }
