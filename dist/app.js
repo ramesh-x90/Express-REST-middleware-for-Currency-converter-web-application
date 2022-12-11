@@ -25,14 +25,6 @@ class SoapClientError {
     }
 }
 exports.SoapClientError = SoapClientError;
-function validation1(req, res, next) {
-    console.log("first validation");
-    next();
-}
-function validation2(req, res, next) {
-    console.log("second validation");
-    next();
-}
 function App({ _port, endPointProtocol, endPointHost, endPointPort, endPointPath, }) {
     return __awaiter(this, void 0, void 0, function* () {
         const app = (0, express_1.default)();
@@ -76,7 +68,7 @@ function App({ _port, endPointProtocol, endPointHost, endPointPort, endPointPath
                     res.status(404).json({ error: err.Exception.message ? err.Exception.message : err });
                 }
                 catch (error) {
-                    res.status(404).json({ error: "invalid fields" });
+                    res.status(500).json({ error: "Soap Server return a error, failed to parse it.", soapFault: error.message });
                 }
             }
         }));
