@@ -28,21 +28,6 @@ export class SoapClientError implements Error {
 
 
 
-function validation1(req: Request, res: Response, next: NextFunction) {
-    console.log("first validation")
-    next()
-}
-
-
-function validation2(req: Request, res: Response, next: NextFunction) {
-    console.log("second validation")
-    next()
-}
-
-
-
-
-
 
 
 export async function App(
@@ -110,7 +95,7 @@ export async function App(
                 const err = JSON.parse(str.slice(a, b + 1));
                 res.status(404).json({ error: err.Exception.message ? err.Exception.message : err });
             } catch (error) {
-                res.status(404).json({ error: "invalid fields" })
+                res.status(500).json({ error: "Soap Server return a error, failed to parse it.", soapFault: (error as Error).message })
             }
 
 
