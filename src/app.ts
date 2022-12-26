@@ -72,9 +72,9 @@ export async function App(
     });
 
 
-    const amountValidator = validatorFactory.createValidator("amount")!.isNull().isNumber().validators
-    const sourceCurrencyValidator = validatorFactory.createValidator("sourceCurrency")!.isNull().isEmptyString().validators
-    const targetCurrencyValidator = validatorFactory.createValidator("targetCurrency")!.isNull().isEmptyString().validators
+    const amountValidator = validatorFactory.createValidator("amount")!.isNotNull().isNumber().validators
+    const sourceCurrencyValidator = validatorFactory.createValidator("sourceCurrency")!.isNotNull().isNotEmptyString().validators
+    const targetCurrencyValidator = validatorFactory.createValidator("targetCurrency")!.isNotNull().isNotEmptyString().validators
 
     app.post('/convert', amountValidator, sourceCurrencyValidator, targetCurrencyValidator, async (req: Request, res: Response) => {
         const { amount, sourceCurrency, targetCurrency } = req.body;
