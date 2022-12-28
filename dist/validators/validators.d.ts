@@ -4,8 +4,8 @@ declare class FieldValidator {
     validators: RequestHandler[];
     constructor(field: string);
     getData(req: Request): any;
-    isNull(): this;
-    isEmptyString(): this;
+    isNotNull(): this;
+    isNotEmptyString(): this;
     isNumber(): this;
 }
 export declare class ValidatorFactory {

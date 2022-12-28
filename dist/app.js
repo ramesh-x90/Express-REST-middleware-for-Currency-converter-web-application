@@ -33,9 +33,11 @@ function App({ _port, endPointProtocol, endPointHost, endPointPort, endPointPath
         let codeNameCache;
         try {
             soapClient = yield (0, wsdl_1.createClientAsync)('./src/wsdl.wsdl', undefined, endpoint);
+            soapClient.addHttpHeader("Authorization", "Bearer UkXp2s5v8x/A?D(G+KbPeShVmYq3t6w9z$B&E)H@McQfTjWnZr4u7x!A%D*F-JaNdRgUkXp2s5v8y/B?E(H+KbPeShVmYq3t6w9z$C&F)J@NcRfTjWnZr4u7x!A%D*G-");
             codeNameCache = (yield soapClient.getAllCodeAndNamesAsync({}))[0].return;
         }
         catch (error) {
+            console.log(error.message);
             throw new SoapClientError();
         }
         app.use(body_parser_1.default.json());
@@ -46,9 +48,9 @@ function App({ _port, endPointProtocol, endPointHost, endPointPort, endPointPath
         app.get('/codeNames', (req, res) => __awaiter(this, void 0, void 0, function* () {
             res.json(codeNameCache);
         }));
-        const amountValidator = validatorFactory.createValidator("amount").isNull().isNumber().validators;
-        const sourceCurrencyValidator = validatorFactory.createValidator("sourceCurrency").isNull().isEmptyString().validators;
-        const targetCurrencyValidator = validatorFactory.createValidator("targetCurrency").isNull().isEmptyString().validators;
+        const amountValidator = validatorFactory.createValidator("amount").isNotNull().isNumber().validators;
+        const sourceCurrencyValidator = validatorFactory.createValidator("sourceCurrency").isNotNull().isNotEmptyString().validators;
+        const targetCurrencyValidator = validatorFactory.createValidator("targetCurrency").isNotNull().isNotEmptyString().validators;
         app.post('/convert', amountValidator, sourceCurrencyValidator, targetCurrencyValidator, (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { amount, sourceCurrency, targetCurrency } = req.body;
             try {

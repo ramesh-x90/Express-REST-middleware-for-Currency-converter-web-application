@@ -16,7 +16,7 @@ class FieldValidator {
     getData(req) {
         return req.body[this.field];
     }
-    isNull() {
+    isNotNull() {
         this.validators.push((req, res, next) => {
             if (this.getData(req) !== null) {
                 next();
@@ -26,7 +26,7 @@ class FieldValidator {
         });
         return this;
     }
-    isEmptyString() {
+    isNotEmptyString() {
         this.validators.push((req, res, next) => {
             if (typeof this.getData(req) !== "string") {
                 return res.status(500).json(new ValidationError(this.field, `${this.field} should be a string`));

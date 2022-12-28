@@ -2,7 +2,7 @@
 /**
  * return
  * @targetNSAlias `tns`
- * @targetNamespace `http://service.ramesh/`
+ * @targetNamespace `http://service.currencyConvertor/`
  */
 export interface Return {
     /** xs:string */

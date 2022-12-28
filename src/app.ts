@@ -51,9 +51,11 @@ export async function App(
 
     try {
         soapClient = await createClientAsync('./src/wsdl.wsdl', undefined, endpoint);
+        soapClient.addHttpHeader("Authorization", "Bearer UkXp2s5v8x/A?D(G+KbPeShVmYq3t6w9z$B&E)H@McQfTjWnZr4u7x!A%D*F-JaNdRgUkXp2s5v8y/B?E(H+KbPeShVmYq3t6w9z$C&F)J@NcRfTjWnZr4u7x!A%D*G-")
         codeNameCache = (await soapClient.getAllCodeAndNamesAsync({}))[0].return as Return[];
 
     } catch (error) {
+        console.log((error as Error).message)
         throw new SoapClientError()
     }
 
